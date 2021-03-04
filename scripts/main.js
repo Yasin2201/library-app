@@ -1,4 +1,8 @@
 const bookDisplay = document.querySelector('#bookDisplay');
+const addBook = document.querySelector('.newBook');
+const form = document.querySelector('#form');
+const submit = document.querySelector('.submit');
+const exitForm = document.querySelector('.exitForm');
 
 let myLibrary = [];
 
@@ -6,19 +10,19 @@ function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read;
+  this.read = false;
   this.info = function() {
     return `${title} by ${author}, ${pages} pages, Read: ${read}`
   }
 }
 
-function addBookToLibrary() {
-  const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, false);
-  const theKiteRunner = new Book('The Kite Runner', 'Khaled Hosseini', 371, true);
-  const runn = new Book('run', 'run', 371, true);
-  myLibrary.push(theHobbit.info(), theKiteRunner.info(), runn.info())
-}
-addBookToLibrary()
+// function addBookToLibrary() {
+//   const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, false);
+//   const theKiteRunner = new Book('The Kite Runner', 'Khaled Hosseini', 371, true);
+//   const malcolmX = new Book('Malcolm X', 'Autobiography', 300, false);
+//   myLibrary.push(theHobbit.info(), theKiteRunner.info(), malcolmX.info())
+// }
+// addBookToLibrary()
 
 function displayBooks(myLibrary) {
         for (let i = 0; i < myLibrary.length; i++) {
@@ -31,7 +35,20 @@ function displayBooks(myLibrary) {
         bookDiv.style.margin = '4px'
         bookDisplay.appendChild(bookDiv)
         bookDiv.textContent = myLibrary[i]
+          }
     }
-}
 
-displayBooks(myLibrary)
+
+addBook.addEventListener("click", () => {
+    form.style.display = 'block'
+})
+
+submit.addEventListener("click", () => {
+  let x = new Book(form.title.value, form.author.value, form.pages.value, form.read.checked);
+  myLibrary.push(x.info())
+  displayBooks(myLibrary)
+})
+
+exitForm.addEventListener("click", () => {
+  form.style.display = 'none'
+})
