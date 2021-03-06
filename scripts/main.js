@@ -1,53 +1,83 @@
-const bookDisplay = document.querySelector('#bookDisplay');
-const addBook = document.querySelector('.newBook');
-const form = document.querySelector('#form');
-const submit = document.querySelector('.submit');
+const form = document.querySelector('#form')
+const newBookBtn = document.querySelector('.newBook')
+const submitBookBtn = document.querySelector('.submit')
 const exitForm = document.querySelector('.exitForm');
+const bookDisplay = document.querySelector('#bookDisplay')
 
 let myLibrary = [];
 
 function Book(title, author, pages, read) {
+  this.id = new Date()
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = false;
-  this.info = function() {
-    return `${title} by ${author}, ${pages} pages, Read: ${read}`
-  }
+  this.read = read;
 }
 
-// function addBookToLibrary() {
-//   const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, false);
-//   const theKiteRunner = new Book('The Kite Runner', 'Khaled Hosseini', 371, true);
-//   const malcolmX = new Book('Malcolm X', 'Autobiography', 300, false);
-//   myLibrary.push(theHobbit.info(), theKiteRunner.info(), malcolmX.info())
-// }
-// addBookToLibrary()
+function addBookToLibrary() {
+    let newBook = new Book(form.title.value, form.author.value, form.pages.value, form.read.checked);
+    myLibrary.push(newBook)
+}
 
-function displayBooks(myLibrary) {
-        for (let i = 0; i < myLibrary.length; i++) {
-        let bookDiv = document.createElement('div')
-        bookDiv.classList.add(i + 'bookDiv')
-        bookDiv.style.width = "250px";
-        bookDiv.style.height =  "50px";
-        bookDiv.style.backgroundColor = "white";
-        bookDiv.style.border = 'solid 1px black'
-        bookDiv.style.margin = '4px'
-        bookDisplay.appendChild(bookDiv)
-        bookDiv.textContent = myLibrary[i]
-          }
+function displayBook() {
+    const deleteBookBtn = document.createElement('button')
+    deleteBookBtn.textContent = 'Delete Book'
+
+    const card = document.createElement('div')
+    card.style.border = ('solid 2px black')
+    card.style.width = ('200px')
+    card.style.margin = ('3px')
+
+    bookDisplay.appendChild(card)
+    card.appendChild(deleteBookBtn)
+
+    const titleDiv = document.createElement('div')
+    const authorDiv = document.createElement('div')
+    const pagesDiv = document.createElement('div')
+    const readDiv = document.createElement('div')
+
+
+    for (i = 0; i < myLibrary.length; i++) {
+    deleteBookBtn.id = myLibrary[i].id
+    card.id = myLibrary[i].id
+
+    card.classList.add('bookCard')
+
+    titleDiv.textContent = `${myLibrary[i].title}`
+    card.appendChild(titleDiv)
+    
+    authorDiv.textContent = `${myLibrary[i].author}`
+    card.appendChild(authorDiv)
+
+    pagesDiv.textContent = `${myLibrary[i].pages} pages`
+    card.appendChild(pagesDiv)
+
+    readDiv.textContent = `Read: ${myLibrary[i].read}`
+    card.appendChild(readDiv)
     }
 
+    deleteBookBtn.addEventListener("click", (e) => {
+    let btnID = e.target.id
+    card.remove()
 
-addBook.addEventListener("click", () => {
+    for (i = 0; i < myLibrary.length; i++) {
+      let libID = myLibrary[i].id
+      if (btnID == libID) {
+        myLibrary.splice(i, 1)
+      }
+    }
+    });
+  }
+
+
+newBookBtn.addEventListener("click", function(){
     form.style.display = 'block'
-})
+  });
 
-submit.addEventListener("click", () => {
-  let x = new Book(form.title.value, form.author.value, form.pages.value, form.read.checked);
-  myLibrary.push(x.info())
-  displayBooks(myLibrary)
-})
+submitBookBtn.addEventListener("click", function(){
+addBookToLibrary()
+  displayBook()
+});
 
 exitForm.addEventListener("click", () => {
   form.style.display = 'none'
