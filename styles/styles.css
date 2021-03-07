@@ -1,9 +1,314 @@
 html {
     height: 100%;
+    width: 100%;
     min-height: 100%;
     background-color: #e6e6e6;
 }
 
-#form {
-  display: none;
+.container {
+  font-family: 'Raleway', sans-serif;
+  font-size: 30px;
+  display: grid;
+  grid-template:
+  [row1-start] ". header logo newBook" 1fr [row1-end]
+  / 1fr 300px 150px 1fr;
+  /* grid-template-columns: 300px, 100px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 'head, .'; */
 }
+
+.header {
+  grid-area: header;
+  justify-content: center;
+  justify-self:center;
+}
+
+.logo {
+  grid-area: logo;
+  justify-self:start;
+  align-self: center;
+
+  height: 70px;
+  width: 70px;
+}
+
+
+.newBook {
+   grid-area: newBook;
+   justify-self:end;
+   
+   color: #e6e6e6;
+   background-image: linear-gradient(to right, #4484ed , #3f7cdd);
+   border: none;
+   border-radius: 50%;
+   outline: none;
+   height: 50px;
+   width: 50px;
+   font-size: 30px;
+   transition: font-size 0.3s;
+   box-shadow: 1px 2px #999;
+ }
+
+ .newBook:hover {
+  background-color: rgb(77, 137, 233) ;
+  font-size: larger;
+  text-decoration: none;
+ }
+
+ .newBook:active {
+  background-color: #3465b4 ;
+  font-size: larger;
+  transform: translateY(1px);
+ }
+
+
+#form {
+  position: absolute;
+  
+
+  display: none;
+  grid-template-columns: 1fr 400px 1fr;
+  grid-template-rows: 1fr 500px 1fr;
+  grid-template-areas: 
+  ". . ."
+  ". formEnter ."
+  ". . . "
+  ;
+
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.397);
+  z-index: 1;
+
+}
+
+.formContainer {
+  grid-area: formEnter;
+  /* position: fixed;
+  top: 50%;
+  left: 50%; */
+  border-radius: 10px;
+  background-color: rgba(192, 37, 37, 0.397);
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 40px ;
+  grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-areas: 
+  ". . . exit "
+  ". title title . "
+  ". . . . "
+  ". author author . "
+  ". . . . "
+  ". pages pages . "
+  ". . . . "
+  ". read readCheck . "
+  ". submit submit . "
+  ". submit submit . "
+  ;
+  width: 400px;
+  height: 500px;
+}
+#title {
+  grid-area: title;
+  font-family: 'Raleway', sans-serif;
+  font-size: 30px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+#author {
+  font-family: 'Raleway', sans-serif;
+  grid-area: author;
+  font-size: 30px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+#pages {
+  font-family: 'Raleway', sans-serif;
+  grid-area: pages;
+  font-size: 30px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+#read {
+  grid-area: readCheck;
+  justify-self:start;
+  align-self: center;
+  margin-left: 10px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+#readBook {
+  font-family: 'Raleway', sans-serif;
+  color: rgb(27, 27, 27);
+  grid-area: read;
+  justify-self:end;
+  align-self: center;
+  font-size: 30px;
+}
+.submit {
+  font-family: 'Raleway', sans-serif;
+  grid-area: submit;
+  justify-self: center;
+  align-self: center;
+  color: rgb(27, 27, 27);
+  background-color: #FFDA45;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 1px 2px #999;
+  outline: none;
+  transition: font-size 0.3s;
+  width: 160px;
+  height: 50px;
+  font-size: 25px;
+
+}
+
+.submit:hover {
+  background-color: #e6c544;
+  font-size: 30px;
+  text-decoration: none;
+ }
+
+ .submit:active {
+  background-color: #e6c544 ;
+  transform: translateY(1px);
+ }
+
+ .exitForm {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+   grid-area: exit;
+   border-radius: 5px;
+   border: none;
+   outline: none;
+   width: 25px;
+   height: 25px;
+   justify-self: center;
+   align-self: center;
+   font-size: 13px;
+   color: #e6e6e6;
+   background-color: rgb(221, 50, 50);
+
+ }
+
+ .exitForm:hover {
+  background-color: rgb(204, 47, 47);
+  text-decoration: none;
+ }
+
+ .exitForm:active {
+  background-color: rgb(204, 47, 47);
+  transform: translateY(1px);
+ }
+
+
+ #bookDisplay {
+  position: absolute;
+  display: inline-flex;
+  flex-wrap: wrap;
+  z-index: 0;
+}
+
+ .bookCard {
+  overflow: scroll;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+  "titleCard titleCard"
+  "authCard authCard"
+  "pageCard pageCard"
+  "readCard delCard"
+  ;
+
+  border: solid 3px #3465b4;
+  border-radius: 5px;
+  background-color: #4b7ac5;
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+ }
+
+ .cardTitle {
+  text-align: center;
+  grid-area: titleCard;
+  justify-self: center;
+  align-self: center;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 40px;
+
+ }
+
+ .cardAuthor {
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  grid-area: authCard;
+  font-family: 'Raleway', sans-serif;
+  font-size: 30px;
+}
+
+.cardPages {
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  grid-area: pageCard;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+}
+
+.cardDelete {
+  grid-area: delCard;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  width: 120px;
+  height: 60px;
+
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgb(192, 49, 49);
+
+  transition: background-color 0.5s; 
+
+  justify-self: center;
+  align-self: center;
+}
+
+.cardDelete:hover {
+  background-color: rgb(223, 51, 51);
+}
+
+.cardDelete:active {
+  transform: translateY(1px);
+}
+
+
+.cardReadStatus {
+  position:relative;
+  grid-area: readCard;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  width: 120px;
+  height: 60px;
+
+  border-radius: 5px;
+  border: none;
+  outline: none;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.cardReadStatus:active {
+  transform: translateY(1px);
+}
+
