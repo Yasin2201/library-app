@@ -32,6 +32,7 @@ submitBookBtn.addEventListener("click", function(){
   form.style.display = 'none'
   addBookToLibrary()
   displayBook()
+  form.reset()
 });
 
 //Closes out the form without adding a newBook

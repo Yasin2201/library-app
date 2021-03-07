@@ -214,6 +214,7 @@ html {
   display: inline-flex;
   flex-wrap: wrap;
   z-index: 0;
+  justify-content: space-evenly;
 }
 
  .bookCard {
