@@ -63,12 +63,12 @@ function toggleReadStatus(readStatusBtn, e) {
     if (btnID == libID && myLibrary[i].read == false) {
       myLibrary[i].read = true
       readStatusBtn.textContent = 'Read'
-      readStatusBtn.style.background = 'green'
+      readStatusBtn.style.background = '#27BEBF'
 
     } else if ((btnID == libID && myLibrary[i].read == true)) {
       myLibrary[i].read = false
       readStatusBtn.textContent = 'Not Read'
-      readStatusBtn.style.background = 'rgb(192, 49, 49)'
+      readStatusBtn.style.background = '#FF8B47'
     }
     }
 }
@@ -110,10 +110,10 @@ function displayBook() {
 
   if (myLibrary[i].read == true) {
     readStatusBtn.textContent = 'Read'
-    readStatusBtn.style.background = 'green'
+    readStatusBtn.style.background = '#27BEBF'
   } else {
     readStatusBtn.textContent = 'Not Read'
-    readStatusBtn.style.background = 'rgb(192, 49, 49)'
+    readStatusBtn.style.background = '#FF8B47'
   }
   
   card.appendChild(readStatusBtn)

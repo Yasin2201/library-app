@@ -68,7 +68,7 @@ html {
 
   display: none;
   grid-template-columns: 1fr 400px 1fr;
-  grid-template-rows: 1fr 500px 1fr;
+  grid-template-rows: 50px 500px 1fr;
   grid-template-areas: 
   ". . ."
   ". formEnter ."
@@ -230,9 +230,10 @@ html {
   "readCard delCard"
   ;
 
-  border: solid 3px #3465b4;
+  /* border: solid 3px #3465b4; */
   border-radius: 5px;
-  background-color: #4b7ac5;
+  background-color: rgb(32, 85, 122);
+
   width: 300px;
   height: 300px;
   margin: 10px;
@@ -246,6 +247,7 @@ html {
   font-family:Georgia, 'Times New Roman', Times, serif;
   font-size: 40px;
 
+  color: whitesmoke;
  }
 
  .cardAuthor {
@@ -255,6 +257,8 @@ html {
   grid-area: authCard;
   font-family: 'Raleway', sans-serif;
   font-size: 30px;
+
+  color: whitesmoke;
 }
 
 .cardPages {
@@ -264,6 +268,8 @@ html {
   grid-area: pageCard;
   font-family: 'Raleway', sans-serif;
   font-size: 20px;
+
+  color: whitesmoke;
 }
 
 .cardDelete {
@@ -276,7 +282,7 @@ html {
   border-radius: 5px;
   border: none;
   outline: none;
-  background-color: rgb(192, 49, 49);
+  background-color: #FD606F;
 
   transition: background-color 0.5s; 
 
@@ -285,7 +291,7 @@ html {
 }
 
 .cardDelete:hover {
-  background-color: rgb(223, 51, 51);
+  background-color: #fa4e60;
 }
 
 .cardDelete:active {
