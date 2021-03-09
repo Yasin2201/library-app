@@ -1,321 +1,299 @@
-html {
-    height: 100%;
-    width: 100%;
-    min-height: 100%;
-    background-color: #e6e6e6;
+html, body{
+  height: 100%;
+  background-color: whitesmoke;
 }
-
-.container {
-  font-family: 'Raleway', sans-serif;
-  font-size: 30px;
-  display: grid;
-  grid-template:
-  [row1-start] ". header logo newBook" 1fr [row1-end]
-  / 1fr 300px 150px 1fr;
-  /* grid-template-columns: 300px, 100px;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas: 'head, .'; */
+body{
+  position: relative;
 }
 
 .header {
-  grid-area: header;
-  justify-content: center;
-  justify-self:center;
-}
-
-.logo {
-  grid-area: logo;
-  justify-self:start;
-  align-self: center;
-
-  height: 70px;
-  width: 70px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
+/* New Book Button Styling */
 .newBook {
-   grid-area: newBook;
-   justify-self:end;
-   
-   color: #e6e6e6;
-   background-image: linear-gradient(to right, #4484ed , #3f7cdd);
-   border: none;
-   border-radius: 50%;
-   outline: none;
-   height: 50px;
-   width: 50px;
-   font-size: 30px;
-   transition: font-size 0.3s;
-   box-shadow: 1px 2px #999;
- }
+  position: absolute;
+  margin-top: 5px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  font-family: 'Montserrat', sans-serif;
+  
+  width: 100px;
+  height: 30px;
+  
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  
+  background-color: #457b9d;
+  color: whitesmoke;
+  
+  transition-duration: 0.4s;
+}
 
- .newBook:hover {
-  background-color: rgb(77, 137, 233) ;
-  font-size: larger;
-  text-decoration: none;
- }
+.newBook:hover {
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
 
- .newBook:active {
-  background-color: #3465b4 ;
-  font-size: larger;
-  transform: translateY(1px);
- }
+.newbook:active {
+	background-color: #1d3557;
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
 
+.newBook:focus, newBook:active:focus {
+	background-color: #1d3557;
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
+
+/* Form styling for adding a newBook & contents of form */
 
 #form {
-  position: absolute;
-  
-
   display: none;
-  grid-template-columns: 1fr 400px 1fr;
-  grid-template-rows: 50px 500px 1fr;
-  grid-template-areas: 
-  ". . ."
-  ". formEnter ."
-  ". . . "
-  ;
-
-  height: 100%;
+  position: absolute;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.397);
-  z-index: 1;
-
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5);
 }
 
 .formContainer {
-  grid-area: formEnter;
-  /* position: fixed;
-  top: 50%;
-  left: 50%; */
-  border-radius: 10px;
-  background-color: rgba(192, 37, 37, 0.397);
-  display: grid;
-  grid-template-columns: 40px 1fr 1fr 40px ;
-  grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-  grid-template-areas: 
-  ". . . exit "
-  ". title title . "
-  ". . . . "
-  ". author author . "
-  ". . . . "
-  ". pages pages . "
-  ". . . . "
-  ". read readCheck . "
-  ". submit submit . "
-  ". submit submit . "
-  ;
-  width: 400px;
-  height: 500px;
+  background-color: #2a9d8f;
+  border-radius: 12px;
+  
+  width: 25%;
+  height: 70vh;
+  
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
 }
-#title {
-  grid-area: title;
-  font-family: 'Raleway', sans-serif;
-  font-size: 30px;
-  border-radius: 5px;
+
+.exitForm {
+  border-radius: 7px;
   border: none;
   outline: none;
+  
+  margin-right: 5px;
+  margin-top: 5px;
+  float: right;
+  
+  color: white;
+  background-color: #e5383b;
+  
+  transition-duration: 0.4s;
+}
+.exitForm:hover {
+  box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.4);
+}
+
+#title {
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  width: 80%;
+  height: 10%;
+  
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+  
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  
+  transition-duration: 0.4s;
+}
+
+#title:hover {
+   box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
+#title:focus {
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
 }
 
 #author {
-  font-family: 'Raleway', sans-serif;
-  grid-area: author;
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 10%;
+  
   font-size: 30px;
-  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  
+  border-radius: 6px;
   border: none;
   outline: none;
+  
+  transition-duration: 0.4s;
+}
+
+#author:hover {
+   box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
+#author:focus {
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
 }
 
 #pages {
-  font-family: 'Raleway', sans-serif;
-  grid-area: pages;
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 10%;
+  
   font-size: 30px;
-  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  
+  border-radius: 6px;
   border: none;
   outline: none;
+  
+  transition-duration: 0.4s;
 }
 
-#read {
-  grid-area: readCheck;
-  justify-self:start;
-  align-self: center;
-  margin-left: 10px;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+#pages:hover {
+   box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
+#pages:focus {
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
 }
 
 #readBook {
-  font-family: 'Raleway', sans-serif;
-  color: rgb(27, 27, 27);
-  grid-area: read;
-  justify-self:end;
-  align-self: center;
-  font-size: 30px;
+  display: block;
+  text-align: center;
+  
+  font-size: 6vh;
+  font-family: 'Montserrat', sans-serif;
+  color: whitesmoke;
 }
+
+#read {
+  height: 6vh;
+  width: 6vh;
+}
+
 .submit {
-  font-family: 'Raleway', sans-serif;
-  grid-area: submit;
-  justify-self: center;
-  align-self: center;
-  color: rgb(27, 27, 27);
-  background-color: #FFDA45;
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
-  box-shadow: 1px 2px #999;
   outline: none;
-  transition: font-size 0.3s;
-  width: 160px;
-  height: 50px;
-  font-size: 25px;
-
+  
+  width: 80%;
+  height: 7vh;
+  
+  background-color: #8d99ae;
+  
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+  color: whitesmoke;
+  
+}
+.submit:hover {
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
 }
 
-.submit:hover {
-  background-color: #e6c544;
-  font-size: 30px;
-  text-decoration: none;
- }
-
- .submit:active {
-  background-color: #e6c544 ;
-  transform: translateY(1px);
- }
-
- .exitForm {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-   grid-area: exit;
-   border-radius: 5px;
-   border: none;
-   outline: none;
-   width: 25px;
-   height: 25px;
-   justify-self: center;
-   align-self: center;
-   font-size: 13px;
-   color: #e6e6e6;
-   background-color: rgb(221, 50, 50);
-
- }
-
- .exitForm:hover {
-  background-color: rgb(204, 47, 47);
-  text-decoration: none;
- }
-
- .exitForm:active {
-  background-color: rgb(204, 47, 47);
-  transform: translateY(1px);
- }
 
 
- #bookDisplay {
-  position: absolute;
+/* Book Display and each newBook instance card style */
+#bookDisplay {
   display: inline-flex;
   flex-wrap: wrap;
-  z-index: 0;
-  justify-content: space-evenly;
 }
 
- .bookCard {
-  overflow: scroll;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-areas: 
-  "titleCard titleCard"
-  "authCard authCard"
-  "pageCard pageCard"
-  "readCard delCard"
-  ;
-
-  /* border: solid 3px #3465b4; */
-  border-radius: 5px;
-  background-color: rgb(32, 85, 122);
-
-  width: 300px;
+.bookCard {
+  position: relative;
+  background-color: #5c4d7d;
+  border: solid 5px #455e89;
+  border-radius: 10px;
+  
+  text-align: center;
   height: 300px;
-  margin: 10px;
- }
+  width: 250px;
+  margin: 30px 15px 0 15px ;
+  
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+}
 
- .cardTitle {
-  text-align: center;
-  grid-area: titleCard;
-  justify-self: center;
-  align-self: center;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+.cardTitle {
   font-size: 40px;
-
+  font-family: Serif, sans-serif;
   color: whitesmoke;
- }
+  margin-top: 10px;
+}
 
- .cardAuthor {
-  text-align: center;
-  justify-self: center;
-  align-self: center;
-  grid-area: authCard;
-  font-family: 'Raleway', sans-serif;
+.cardAuthor {
   font-size: 30px;
-
+  font-family: 'Montserrat', sans-serif;
   color: whitesmoke;
+  margin-top: 20px;
 }
 
 .cardPages {
-  text-align: center;
-  justify-self: center;
-  align-self: center;
-  grid-area: pageCard;
-  font-family: 'Raleway', sans-serif;
   font-size: 20px;
-
+  font-family: sans-serif;
   color: whitesmoke;
+  
+  margin-top: 15px;
 }
 
 .cardDelete {
-  grid-area: delCard;
-  font-family: 'Raleway', sans-serif;
-  font-size: 20px;
-  width: 120px;
-  height: 60px;
-
+  font-family: 'Montserrat', sans-serif;
+  color: #212529;
+  
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  
   border-radius: 5px;
   border: none;
   outline: none;
-  background-color: #FD606F;
-
-  transition: background-color 0.5s; 
-
-  justify-self: center;
-  align-self: center;
+  width: 90px;
+  height: 23px;
+  margin: 0 20px 10px 0;
+  
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+  
+  transition-duration: 0.2s;
+  
 }
-
-.cardDelete:hover {
-  background-color: #fa4e60;
+.cardDelete:hover{
+  background-color: #f94144;
 }
-
 .cardDelete:active {
-  transform: translateY(1px);
+  transform: translateY(1px)
 }
+
+
 
 
 .cardReadStatus {
-  position:relative;
-  grid-area: readCard;
-  font-family: 'Raleway', sans-serif;
-  font-size: 20px;
-  width: 120px;
-  height: 60px;
-
+  font-family: 'Montserrat', sans-serif;
+  color: whitesmoke;
+  
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  
   border-radius: 5px;
   border: none;
   outline: none;
-
-  justify-self: center;
-  align-self: center;
+  margin: 0 0 10px 20px;
+  
+  width: 90px;
+  height: 23px;
+  
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.4);
+  
+  transition-duration: 0.2s;
+  
 }
 
-.cardReadStatus:active {
-  transform: translateY(1px);
+.cardReadStatus:hover {
+   box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.7);
 }
+
 
