@@ -29,11 +29,37 @@ newBookBtn.addEventListener("click", function(){
 
 //Hides 'NewBook' form once completed and displays on screen & pushes to myLibrary
 submitBookBtn.addEventListener("click", function(){
-  form.style.display = 'none'
-  addBookToLibrary()
-  displayBook()
-  form.reset()
+  validateForm()
+
+  if (form.checkValidity() === true) {
+    form.style.display = 'none'
+    addBookToLibrary()
+    displayBook()
+    form.reset()
+  }
+
 });
+
+// Validity styling
+function validateForm() {
+  if (form.title.validity.valueMissing){
+    form.title.style.backgroundColor = 'rgb(255, 125, 125)'
+    } else {
+      form.title.style.backgroundColor = 'whitesmoke'
+    }
+
+  if (form.author.validity.valueMissing){
+    form.author.style.backgroundColor = 'rgb(255, 125, 125)'
+    } else {
+      form.author.style.backgroundColor = 'whitesmoke'
+    }
+
+  if (form.pages.validity.valueMissing){
+    form.pages.style.backgroundColor = 'rgb(255, 125, 125)'
+    } else {
+      form.pages.style.backgroundColor = 'whitesmoke'
+    }
+}
 
 //Closes out the form without adding a newBook
 exitForm.addEventListener("click", () => {
