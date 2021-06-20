@@ -6,6 +6,18 @@ const bookDisplay = document.querySelector('#bookDisplay')
 
 const db = firebase.firestore()
 
+function renderBooks() {
+  db.collection('books').get().then((book) => {
+    book.forEach((bk) => {
+      console.log(book.docs)
+      console.log(bk.data())
+      displayBook(bk)
+
+    })
+  })
+}
+renderBooks()
+
 function saveBook(book) {
   // Add a new book entry to the database.
   return db.collection('books').add({
@@ -30,7 +42,8 @@ function Book(title, author, pages, read) {
 //Pushes newBook to library array
 function addBookToLibrary() {
   let newBook = new Book(form.title.value, form.author.value, form.pages.value, form.read.checked);
-  saveBook(newBook)
+
+  return saveBook(newBook)
 }
 
 //Displays form when clicking 'New Book' button
@@ -45,7 +58,13 @@ submitBookBtn.addEventListener("click", function () {
   if (form.checkValidity() === true) {
     form.style.display = 'none'
     addBookToLibrary()
-    displayBook()
+    // displayBook()
+    // renderBooks()
+    // db.collection('books').get().then((book) => {
+    //   book.forEach((bk) => {
+    //     console.log(bk.id)
+    //   })
+    // })
     form.reset()
   }
 
@@ -106,7 +125,7 @@ function toggleReadStatus(readStatusBtn, e) {
 }
 
 // display the book and all its contents on screen
-function displayBook() {
+function displayBook(doc) {
   const deleteBookBtn = document.createElement('button')
   deleteBookBtn.textContent = 'Delete'
   deleteBookBtn.classList.add('cardDelete')
@@ -124,38 +143,38 @@ function displayBook() {
   const pagesDiv = document.createElement('div')
   pagesDiv.classList.add('cardPages')
 
-  db.collection('books').get().then((snapshot) => {
-    snapshot.docs.map((doc) => {
-      // return doc.data()
-      deleteBookBtn.id = doc.id
-      card.id = doc.id
-      readStatusBtn.id = doc.id
+  // db.collection('books').get().then((snapshot) => {
+  //   snapshot.docs.map((doc) => {
+  // return doc.data()
+  deleteBookBtn.id = doc.id
+  card.id = doc.id
+  readStatusBtn.id = doc.id
 
-      card.classList.add('bookCard')
+  card.classList.add('bookCard')
 
-      titleDiv.textContent = `${doc.data().title}`
-      card.appendChild(titleDiv)
+  titleDiv.textContent = `${doc.data().title}`
+  card.appendChild(titleDiv)
 
-      authorDiv.textContent = `${doc.data().author}`
-      card.appendChild(authorDiv)
+  authorDiv.textContent = `${doc.data().author}`
+  card.appendChild(authorDiv)
 
-      pagesDiv.textContent = `${doc.data().pages} pages`
-      card.appendChild(pagesDiv)
+  pagesDiv.textContent = `${doc.data().pages} pages`
+  card.appendChild(pagesDiv)
 
-      if (doc.data().read == true) {
-        readStatusBtn.textContent = 'Read'
-        readStatusBtn.style.background = '#27BEBF'
-      } else {
-        readStatusBtn.textContent = 'Not Read'
-        readStatusBtn.style.background = '#FF8B47'
-      }
+  if (doc.data().read == true) {
+    readStatusBtn.textContent = 'Read'
+    readStatusBtn.style.background = '#27BEBF'
+  } else {
+    readStatusBtn.textContent = 'Not Read'
+    readStatusBtn.style.background = '#FF8B47'
+  }
 
-      card.appendChild(readStatusBtn)
-      card.appendChild(deleteBookBtn)
-      bookDisplay.appendChild(card)
+  card.appendChild(readStatusBtn)
+  card.appendChild(deleteBookBtn)
+  bookDisplay.appendChild(card)
 
-    })
-  })
+  //   })
+  // })
 
   readStatusBtn.addEventListener("click", (e) => {
     toggleReadStatus(readStatusBtn, e)
@@ -165,5 +184,3 @@ function displayBook() {
     deleteBook(card, e)
   });
 }
-
-displayBook()
