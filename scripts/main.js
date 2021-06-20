@@ -4,7 +4,19 @@ const submitBookBtn = document.querySelector('.submit')
 const exitForm = document.querySelector('.exitForm');
 const bookDisplay = document.querySelector('#bookDisplay')
 
-let myLibrary = [];
+const db = firebase.firestore()
+
+function saveBook(book) {
+  // Add a new book entry to the database.
+  return db.collection('books').add({
+    title: book.title,
+    author: book.author,
+    pages: book.pages,
+    read: book.read,
+  }).catch(function (error) {
+    console.error('Error adding book', error);
+  });
+}
 
 //Book constructor
 function Book(title, author, pages, read) {
@@ -18,17 +30,16 @@ function Book(title, author, pages, read) {
 //Pushes newBook to library array
 function addBookToLibrary() {
   let newBook = new Book(form.title.value, form.author.value, form.pages.value, form.read.checked);
-  
-  myLibrary.push(newBook)
+  saveBook(newBook)
 }
 
 //Displays form when clicking 'New Book' button
-newBookBtn.addEventListener("click", function(){
-    form.style.display = 'grid'
-  });
+newBookBtn.addEventListener("click", function () {
+  form.style.display = 'grid'
+});
 
 //Hides 'NewBook' form once completed and displays on screen & pushes to myLibrary
-submitBookBtn.addEventListener("click", function(){
+submitBookBtn.addEventListener("click", function () {
   validateForm()
 
   if (form.checkValidity() === true) {
@@ -42,23 +53,23 @@ submitBookBtn.addEventListener("click", function(){
 
 // Validity styling
 function validateForm() {
-  if (form.title.validity.valueMissing){
+  if (form.title.validity.valueMissing) {
     form.title.style.backgroundColor = 'rgb(255, 125, 125)'
-    } else {
-      form.title.style.backgroundColor = 'whitesmoke'
-    }
+  } else {
+    form.title.style.backgroundColor = 'whitesmoke'
+  }
 
-  if (form.author.validity.valueMissing){
+  if (form.author.validity.valueMissing) {
     form.author.style.backgroundColor = 'rgb(255, 125, 125)'
-    } else {
-      form.author.style.backgroundColor = 'whitesmoke'
-    }
+  } else {
+    form.author.style.backgroundColor = 'whitesmoke'
+  }
 
-  if (form.pages.validity.valueMissing){
+  if (form.pages.validity.valueMissing) {
     form.pages.style.backgroundColor = 'rgb(255, 125, 125)'
-    } else {
-      form.pages.style.backgroundColor = 'whitesmoke'
-    }
+  } else {
+    form.pages.style.backgroundColor = 'whitesmoke'
+  }
 }
 
 //Closes out the form without adding a newBook
@@ -66,37 +77,32 @@ exitForm.addEventListener("click", () => {
   form.style.display = 'none'
 })
 
-//deletes book and removes from myLibrary array
+//deletes book and removes from firestore array
 function deleteBook(card, e) {
   let btnID = e.target.id
-  card.remove()
-
-  for (i = 0; i < myLibrary.length; i++) {
-    let libID = myLibrary[i].id
-    if (btnID == libID) {
-      myLibrary.splice(i, 1)
-    }
-  }
+  db.collection("books").doc(btnID).delete().then(() => {
+    console.log("Document successfully deleted!");
+    card.remove()
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  });
 }
 
-//changes wether the user has 'read' or 'not read' the book
+//changes if the user has 'read' or 'not read' the book
 function toggleReadStatus(readStatusBtn, e) {
   let btnID = e.target.id
 
-  for (i = 0; i < myLibrary.length; i++) {
-    let libID = myLibrary[i].id
-
-    if (btnID == libID && myLibrary[i].read == false) {
-      myLibrary[i].read = true
-      readStatusBtn.textContent = 'Read'
-      readStatusBtn.style.background = '#27BEBF'
-
-    } else if ((btnID == libID && myLibrary[i].read == true)) {
-      myLibrary[i].read = false
+  db.collection("books").doc(btnID).get().then((book) => {
+    if (book.data().read === true) {
+      db.collection("books").doc(btnID).update({ read: false })
       readStatusBtn.textContent = 'Not Read'
       readStatusBtn.style.background = '#FF8B47'
+    } else {
+      db.collection("books").doc(btnID).update({ read: true })
+      readStatusBtn.textContent = 'Read'
+      readStatusBtn.style.background = '#27BEBF'
     }
-    }
+  })
 }
 
 // display the book and all its contents on screen
@@ -118,41 +124,46 @@ function displayBook() {
   const pagesDiv = document.createElement('div')
   pagesDiv.classList.add('cardPages')
 
-  for (i = 0; i < myLibrary.length; i++) {
-  deleteBookBtn.id = myLibrary[i].id
-  card.id = myLibrary[i].id
-  readStatusBtn.id = myLibrary[i].id
+  db.collection('books').get().then((snapshot) => {
+    snapshot.docs.map((doc) => {
+      // return doc.data()
+      deleteBookBtn.id = doc.id
+      card.id = doc.id
+      readStatusBtn.id = doc.id
 
-  card.classList.add('bookCard')
+      card.classList.add('bookCard')
 
-  titleDiv.textContent = `${myLibrary[i].title}`
-  card.appendChild(titleDiv)
-  
-  authorDiv.textContent = `${myLibrary[i].author}`
-  card.appendChild(authorDiv)
+      titleDiv.textContent = `${doc.data().title}`
+      card.appendChild(titleDiv)
 
-  pagesDiv.textContent = `${myLibrary[i].pages} pages`
-  card.appendChild(pagesDiv)
+      authorDiv.textContent = `${doc.data().author}`
+      card.appendChild(authorDiv)
 
-  if (myLibrary[i].read == true) {
-    readStatusBtn.textContent = 'Read'
-    readStatusBtn.style.background = '#27BEBF'
-  } else {
-    readStatusBtn.textContent = 'Not Read'
-    readStatusBtn.style.background = '#FF8B47'
-  }
-  
-  card.appendChild(readStatusBtn)
-  card.appendChild(deleteBookBtn)
-  bookDisplay.appendChild(card)
+      pagesDiv.textContent = `${doc.data().pages} pages`
+      card.appendChild(pagesDiv)
 
-  }
-  
+      if (doc.data().read == true) {
+        readStatusBtn.textContent = 'Read'
+        readStatusBtn.style.background = '#27BEBF'
+      } else {
+        readStatusBtn.textContent = 'Not Read'
+        readStatusBtn.style.background = '#FF8B47'
+      }
+
+      card.appendChild(readStatusBtn)
+      card.appendChild(deleteBookBtn)
+      bookDisplay.appendChild(card)
+
+    })
+  })
+
   readStatusBtn.addEventListener("click", (e) => {
-  toggleReadStatus(readStatusBtn, e)
+    toggleReadStatus(readStatusBtn, e)
   });
-  
+
   deleteBookBtn.addEventListener("click", (e) => {
-  deleteBook(card, e)
+    deleteBook(card, e)
   });
 }
+
+displayBook()

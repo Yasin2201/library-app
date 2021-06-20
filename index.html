@@ -1,40 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library App</title>
-    <link rel="stylesheet" href="styles/styles.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library App</title>
+  <link rel="stylesheet" href="styles/styles.css">
 
-    <link rel="stylesheet"  rel="preconnect" href="https://fonts.gstatic.com">
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-  
-  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 </head>
-<body>
-    <h1 class="header">My Library</h1>
 
-    <button type="button" class='newBook'>New Book</button>
+<body>
+  <h1 class="header">My Library</h1>
+
+  <button type="button" class='newBook'>New Book</button>
 
   <form id='form'>
     <div class='formContainer'>
-    <button type="reset" class='exitForm'>X</button></br>
-    <input type='text' id='title' name='title' placeholder="Book Title" required></input></br>
+      <button type="reset" class='exitForm'>X</button></br>
+      <input type='text' id='title' name='title' placeholder="Book Title" required></input></br>
 
-    <input type='text' id='author' name='author' placeholder="Author Name" required></input></br>
+      <input type='text' id='author' name='author' placeholder="Author Name" required></input></br>
 
-    <input type='number' id='pages' name='pages' placeholder="Number of Pages" required></input></br>
- 
-<label id='readBook' for='read'>Read:</label>
-    <input type='checkbox' id='read' name='read' value='read'></input></br>
+      <input type='number' id='pages' name='pages' placeholder="Number of Pages" required></input></br>
 
-    <button type="button" class='submit'>Submit</button>
+      <label id='readBook' for='read'>Read:</label>
+      <input type='checkbox' id='read' name='read' value='read'></input></br>
+
+      <button type="button" class='submit'>Submit</button>
     </div>
   </form>
 
   <div id="bookDisplay"></div>
+
+
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCv-F7uBSUPNIeiVZzftM7ELBploQJlQPw",
+      authDomain: "library-app-71b53.firebaseapp.com",
+      projectId: "library-app-71b53",
+      storageBucket: "library-app-71b53.appspot.com",
+      messagingSenderId: "852153452030",
+      appId: "1:852153452030:web:46130e4539c761b647ecaf"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src=scripts/main.js></script>
+
 </body>
-<script src=scripts/main.js></script>
+
 </html>
